@@ -102,9 +102,10 @@ async function wordClickEventHandler(event) {
                         }
                     }
                     for (col = 0; col < 5; col++) {
-                        if (copyCorrectWord.includes(copyWord[col])) {
+                        let index = copyCorrectWord.indexOf(copyWord[col]);
+                        if (index >= 0) {
                             calculatedCorrectness[col] = 1;
-                            copyCorrectWord = copyCorrectWord.replaceAt(col, "-");
+                            copyCorrectWord = copyCorrectWord.replaceAt(index, "-");
                         }
                     }
                     for (col = 1; col <= 5; col++) {
