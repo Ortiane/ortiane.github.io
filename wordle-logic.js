@@ -87,7 +87,7 @@ async function wordClickEventHandler(event) {
                         keyObj.classList.add(CORRECTNESS_MAPPING.get(2));
                     }
                     terminalState = true;
-                    alert("You win.");
+                    alert("You win! Refresh the page to play again.");
                 }
                 else {
                     // Color in the letters that are correct.
