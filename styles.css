@@ -1,0 +1,129 @@
+html {
+    box-sizing: border-box;
+    background-color: rgb(18, 17, 17);
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+.title {
+    color: white;
+    text-align: center;
+    font-weight: bold;
+    font-size: 4em;
+    margin: 0% 0% 1% 0%;
+}
+
+.solid {
+    margin: 0% 0% 5% 0%;
+}
+
+.wordle-game {
+    width: fit-content;
+    height: fit-content;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    column-gap: 5px;
+    row-gap: 5px;
+    margin: auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.wordle-field {
+    width: 75px;
+    height: 75px;
+    background-color: #121213;
+    font-size: 45px;
+    font-family: sans-serif;
+    font-weight: bold;
+    text-align: center;
+    color: white;
+    text-transform: uppercase;
+}
+
+.wordle-keyboard {
+    margin: 100px 0px 0px 0px;
+    width: fit-content;
+    height: fit-content;
+    column-gap: 1px;
+    row-gap: 1px;
+    display: grid;
+    grid-template-areas:
+        "wordle-row-1"
+        "wordle-row-2"
+        "wordle-row-3";
+    margin: 50px auto auto auto;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    justify-items: center;
+}
+
+.wordle-row-1 {
+    display: grid;
+    width: fit-content;
+    height: fit-content;
+    grid-template-areas: "q w e r t y u i o p"
+}
+
+.wordle-row-2 {
+    display: grid;
+    width: fit-content;
+    height: fit-content;
+    grid-template-areas: "a s d f g h j k l"
+}
+
+.wordle-row-3 {
+    display: grid;
+    width: fit-content;
+    height: fit-content;
+    grid-template-areas: "enter z x c v b n m backspace"
+}
+
+.wordle-letter {
+    display: flex;
+    width: 35px;
+    height: 35px;
+    background-color: #151516;
+    font-size: 25px;
+    font-family: sans-serif;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-transform: uppercase;
+}
+
+.special-key {
+    display: flex;
+    min-width: 65px;
+    width: fit-content;
+    height: 35px;
+    background-color: rgb(69, 71, 74);
+    font-size: 20px;
+    font-family: sans-serif;
+    font-weight: bold;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    text-transform: uppercase;
+}
+
+.incorrect-word {
+    background-color: #3a3a3c;
+}
+
+.partially-correct-word {
+    background-color: #d1b036;
+}
+
+.correct-word {
+    background-color: #6aaa64;
+}
