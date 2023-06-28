@@ -89,8 +89,8 @@ html {
 }
 
 .wordle-letter {
-    width: 9.8vw;
-    height: 4.8vh;
+    width: 9vw;
+    height: 4vh;
     background-color: #151516;
     font-size: 1.65em;
     font-family: sans-serif;
@@ -102,11 +102,11 @@ html {
 }
 
 .special-key {
-    min-width: 14vw;
+    min-width: 13vw;
     width: fit-content;
-    height: auto;
+    height: 4vh;
     background-color: rgb(69, 71, 74);
-    font-size: 1.65em;
+    font-size: 1.2em;
     font-family: sans-serif;
     font-weight: bold;
     justify-content: center;
