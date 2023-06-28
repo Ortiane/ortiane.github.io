@@ -54,95 +54,99 @@ async function wordClickEventHandler(event) {
     if (target.tagName.toLowerCase() !== "button") {
         return;
     }
-    keyboardObject.removeEventListener("click", wordClickEventHandler);
-    let currentTextBox = document.querySelector(`.row-${currentRow}.col-${currentCol}`);
-    if (target.className.includes("backspace")) {
-        if (currentTextBox.value) {
-            // If you are on the last box.
-            currentTextBox.value = "";
-        }
-        else {
-            // Clear and move to previous box.
-            currentCol = Math.max(1, currentCol - 1);
-            currentTextBox.style.borderColor = "";
-            currentTextBox = document.querySelector(`.row-${currentRow}.col-${currentCol}`);
-            currentTextBox.value = "";
-        }
-    }
-    else if (target.className.includes("enter")) {
-        if (currentCol == 5 && currentTextBox.value) {
-            let word = ""
-            for (let i = 1; i <= 5; i++) {
-                let letterObj = document.querySelector(`.row-${currentRow}.col-${i}`);
-                word += letterObj.value;
+    try {
+        keyboardObject.removeEventListener("click", wordClickEventHandler);
+        let currentTextBox = document.querySelector(`.row-${currentRow}.col-${currentCol}`);
+        if (target.className.includes("backspace")) {
+            if (currentTextBox.value) {
+                // If you are on the last box.
+                currentTextBox.value = "";
             }
-            const response = await postData(VALIDATE_URL, { "word": word });
-            if (response.validWord) {
-                // Check if it's equal to the daily word.
-                if (word == correctWord) {
-                    for (col = 1; col <= 5; col++) {
-                        let letterObj = document.querySelector(`.row-${currentRow}.col-${col}`);
-                        let keyObj = document.querySelector(`.${word[col - 1]}`);
-                        letterObj.classList.add(CORRECTNESS_MAPPING.get(2));
-                        keyObj.classList.add(CORRECTNESS_MAPPING.get(2));
-                    }
-                    terminalState = true;
-                    alert("You win! Refresh the page to play again.");
+            else {
+                // Clear and move to previous box.
+                currentCol = Math.max(1, currentCol - 1);
+                currentTextBox.style.borderColor = "";
+                currentTextBox = document.querySelector(`.row-${currentRow}.col-${currentCol}`);
+                currentTextBox.value = "";
+            }
+        }
+        else if (target.className.includes("enter")) {
+            if (currentCol == 5 && currentTextBox.value) {
+                let word = ""
+                for (let i = 1; i <= 5; i++) {
+                    let letterObj = document.querySelector(`.row-${currentRow}.col-${i}`);
+                    word += letterObj.value;
                 }
-                else {
-                    // Color in the letters that are correct.
-                    let calculatedCorrectness = Array(5).fill(0);
-                    let copyCorrectWord = correctWord;
-                    let copyWord = word;
-                    for (col = 0; col < 5; col++) {
-                        if (copyWord[col] == copyCorrectWord[col]) {
-                            calculatedCorrectness[col] = 2;
-                            copyCorrectWord = copyCorrectWord.replaceAt(col, "-");
-                            copyWord = copyWord.replaceAt(col, "*");
+                const response = await postData(VALIDATE_URL, { "word": word });
+                if (response.validWord) {
+                    // Check if it's equal to the daily word.
+                    if (word == correctWord) {
+                        for (col = 1; col <= 5; col++) {
+                            let letterObj = document.querySelector(`.row-${currentRow}.col-${col}`);
+                            let keyObj = document.querySelector(`.${word[col - 1]}`);
+                            letterObj.classList.add(CORRECTNESS_MAPPING.get(2));
+                            keyObj.classList.add(CORRECTNESS_MAPPING.get(2));
                         }
-                    }
-                    for (col = 0; col < 5; col++) {
-                        let index = copyCorrectWord.indexOf(copyWord[col]);
-                        if (index >= 0) {
-                            calculatedCorrectness[col] = 1;
-                            copyCorrectWord = copyCorrectWord.replaceAt(index, "-");
-                        }
-                    }
-                    for (col = 1; col <= 5; col++) {
-                        let letterObj = document.querySelector(`.row-${currentRow}.col-${col}`);
-                        let keyObj = document.querySelector(`.${word[col - 1]}`);
-                        letterObj.classList.add(CORRECTNESS_MAPPING.get(calculatedCorrectness[col - 1]));
-                        keyObj.classList.add(CORRECTNESS_MAPPING.get(calculatedCorrectness[col - 1]));
-                    }
-                    if (currentRow != 6) {
-                        currentCol = 1;
-                        currentRow++;
-                        currentTextBox.style.borderColor = "";
-                        currentTextBox = document.querySelector(`.row-${currentRow}.col-${currentCol}`);
+                        terminalState = true;
+                        alert("You win! Refresh the page to play again.");
                     }
                     else {
-                        terminalState = true;
-                        alert(`Nice try, you lose. The word was "${correctWord}".`)
+                        // Color in the letters that are correct.
+                        let calculatedCorrectness = Array(5).fill(0);
+                        let copyCorrectWord = correctWord;
+                        let copyWord = word;
+                        for (col = 0; col < 5; col++) {
+                            if (copyWord[col] == copyCorrectWord[col]) {
+                                calculatedCorrectness[col] = 2;
+                                copyCorrectWord = copyCorrectWord.replaceAt(col, "-");
+                                copyWord = copyWord.replaceAt(col, "*");
+                            }
+                        }
+                        for (col = 0; col < 5; col++) {
+                            let index = copyCorrectWord.indexOf(copyWord[col]);
+                            if (index >= 0) {
+                                calculatedCorrectness[col] = 1;
+                                copyCorrectWord = copyCorrectWord.replaceAt(index, "-");
+                            }
+                        }
+                        for (col = 1; col <= 5; col++) {
+                            let letterObj = document.querySelector(`.row-${currentRow}.col-${col}`);
+                            let keyObj = document.querySelector(`.${word[col - 1]}`);
+                            letterObj.classList.add(CORRECTNESS_MAPPING.get(calculatedCorrectness[col - 1]));
+                            keyObj.classList.add(CORRECTNESS_MAPPING.get(calculatedCorrectness[col - 1]));
+                        }
+                        if (currentRow != 6) {
+                            currentCol = 1;
+                            currentRow++;
+                            currentTextBox.style.borderColor = "";
+                            currentTextBox = document.querySelector(`.row-${currentRow}.col-${currentCol}`);
+                        }
+                        else {
+                            terminalState = true;
+                            alert(`Nice try, you lose. The word was "${correctWord}".`)
+                        }
                     }
+                }
+                else {
+                    alert("Not a valid word.");
                 }
             }
             else {
-                alert("Not a valid word.");
+                alert("Not enough letters.");
             }
         }
-        else {
-            alert("Not enough letters.");
+        else if (!currentTextBox.value) {
+            currentTextBox.value = target.textContent;
+            currentCol = Math.min(5, currentCol + 1);
+            currentTextBox.style.borderColor = "";
+            currentTextBox = document.querySelector(`.row-${currentRow}.col-${currentCol}`);
         }
+        currentTextBox.style.borderColor = "white";
     }
-    else if (!currentTextBox.value) {
-        currentTextBox.value = target.textContent;
-        currentCol = Math.min(5, currentCol + 1);
-        currentTextBox.style.borderColor = "";
-        currentTextBox = document.querySelector(`.row-${currentRow}.col-${currentCol}`);
-    }
-    currentTextBox.style.borderColor = "white";
-    if (!terminalState) {
-        keyboardObject.addEventListener("click", wordClickEventHandler);
+    finally {
+        if (!terminalState) {
+            keyboardObject.addEventListener("click", wordClickEventHandler);
+        }
     }
 }
 

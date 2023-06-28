@@ -36,10 +36,10 @@ html {
 }
 
 .wordle-field {
-    width: 75px;
-    height: 75px;
+    width: 1.35em;
+    height: 1.4em;
     background-color: #121213;
-    font-size: 45px;
+    font-size: 3em;
     font-family: sans-serif;
     font-weight: bold;
     text-align: center;
@@ -48,7 +48,7 @@ html {
 }
 
 .wordle-keyboard {
-    margin: 100px 0px 0px 0px;
+    /* margin: 100px 0px 0px 0px; */
     width: fit-content;
     height: fit-content;
     column-gap: 1px;
@@ -58,10 +58,10 @@ html {
         "wordle-row-1"
         "wordle-row-2"
         "wordle-row-3";
-    margin: 50px auto auto auto;
-    top: 0;
+    margin: auto;
+    position: absolute;
     right: 0;
-    bottom: 0;
+    bottom: 2px;
     left: 0;
     justify-items: center;
 }
@@ -89,10 +89,10 @@ html {
 
 .wordle-letter {
     display: flex;
-    width: 35px;
-    height: 35px;
+    width: 1.2em;
+    height: 2em;
     background-color: #151516;
-    font-size: 25px;
+    font-size: 1.65em;
     font-family: sans-serif;
     font-weight: bold;
     justify-content: center;
@@ -103,9 +103,9 @@ html {
 
 .special-key {
     display: flex;
-    min-width: 65px;
+    min-width: 1.5em;
     width: fit-content;
-    height: 35px;
+    height: auto;
     background-color: rgb(69, 71, 74);
     font-size: 20px;
     font-family: sans-serif;
